@@ -1,27 +1,29 @@
 .chat-list-heading {
-    background-color: purple;
     padding: 15px;
     position: relative;
+    border-bottom: 1px solid #c8c8c8;
 }
 
 .chat-heading-text {
-    color: yellow;
     text-align: center;
 }
 
 .chat-heading-icon {
-    color: green;
+    color: #000000;
     position: absolute;
     right: 15px;
-    top: 15px;
+    top: 12px;
+    font-size: 22px;
+
 }
 
 .chat-row {
-    background-color: yellow;
-    padding: 15px 15px 0px 15px;
+    padding: 10px 15px;
     display: flex;
     align-items: center;
     gap: 10px;
+    cursor: pointer;
+    transition: all 0.4s ease;
 }
 
 .chat-list-user-image {
@@ -32,7 +34,6 @@
 }
 
 .username-and-message-container {
-    background-color: blue;
     width: calc(100% - 50px - 10px);
 }
 
@@ -43,7 +44,6 @@
 }
 
 .chat-preview-message {
-    background-color: red;
     display: flex;
     width: 100%;
     align-items: center;
@@ -51,28 +51,25 @@
 }
 
 .chat-preview-message-text {
-    color: pink;
+    color: #767676;
     font-size: 12px;
     white-space: nowrap;
-    width: 80%;
     text-overflow: ellipsis;
     overflow: hidden;
 }
 
 .chat-preview-time-container {
-    background-color: green;
     display: flex;
 }
 
 .dot-container {
-    background-color: black;
     width: 10px;
     position: relative;
 
 }
 
 .dot-container .dot {
-    color: blue;
+    color: #767676;
     font-size: 20px;
     position: absolute;
     bottom: 5px;
@@ -82,6 +79,15 @@
 
 .message-sent-time-text {
     font-size: 12px;
+    color: #767676;
+}
+
+.active-chat-row {
+    background-color: #e3e3e3;
+}
+
+.chat-row:hover {
+    background-color: #f1f1f1;
 }
 
 @media only screen and (max-width:480px) {

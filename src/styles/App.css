@@ -1,5 +1,4 @@
 .main-container {
-    background-color: yellow;
     height: 100vh;
 
 }
@@ -11,7 +10,7 @@
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid rgba(128, 128, 128);
+    border-bottom: 1px solid #c8c8c8;
 }
 
 .navbar-heading {
@@ -37,7 +36,6 @@
 }
 
 .content-container {
-    background-color: pink;
     display: flex;
     height: calc(100vh - 61px);
     padding: 10px 60px;
@@ -45,9 +43,8 @@
 }
 
 .left-content-container {
-    background-color: green;
     width: 30%;
-    border: 1px solid rgba(128, 128, 128);
+    border: 1px solid #c8c8c8;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
@@ -55,7 +52,7 @@
 .right-content-container {
     background-color: red;
     flex: 1;
-    border: 1px solid rgba(128, 128, 128);
+    border: 1px solid #c8c8c8;
     border-left: none;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
