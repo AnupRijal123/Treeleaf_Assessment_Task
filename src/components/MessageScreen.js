@@ -1,7 +1,22 @@
 import '../styles/MessageScreen.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState, useEffect } from 'react';
 
 function MessageScreen() {
+    const [messageTextAreaDom, setMessageTextAreaDom] = useState('');
+
+    useEffect(() => {
+        const textAreaDom = document.getElementById('message-textarea');
+        setMessageTextAreaDom(textAreaDom)
+    }, []);
+
+    const handleInputChange = () => {
+        console.log('helloo')
+        console.log(messageTextAreaDom);
+        messageTextAreaDom.style.height = 'auto';
+        messageTextAreaDom.style.height = `${messageTextAreaDom.scrollHeight}px`;
+
+    }
     return (
         <>
             <div className="top-section">
@@ -19,18 +34,75 @@ function MessageScreen() {
                     </div>
                 </div>
                 <div className="chats-screen-container">
-                    <h1>hello</h1>
-                    <h1>hello</h1>
-                    <h1>hello</h1>
-                    <h1>hello</h1>
-                    <h1>hello</h1>
-                    <h1>hello</h1>
-                    <h1>hello</h1>
-                    <h1>hello</h1>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
+                    <h4>hello</h4>
 
                 </div>
             </div>
-            <div>2</div>
+            <div className="bottom-section">
+                <div className="message-icons-container">
+                    <FontAwesomeIcon className="custom-icon" icon="fa-solid fa-microphone" />
+                    <FontAwesomeIcon className="custom-icon" icon="fa-regular fa-image" />
+                </div>
+                <div className="message-input-container">
+                    <textarea
+                        id="message-textarea"
+                        onInput={handleInputChange}
+                        placeholder="Message..."
+                    />
+                    <button className="send-button">Send</button>
+                </div>
+            </div>
         </>
     )
 }

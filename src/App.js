@@ -22,7 +22,7 @@ function App() {
     <div className="main-container">
       <div className="navbar">
         <div className="navbar-heading">
-          <h4>Treeleaf Assessment Task</h4>
+          <h4>Chat Message Design</h4>
           <a href="https://anup-rijal-portfolio.web.app/">
             <p className="developer-name"> by Anup Rijal</p>
           </a>
