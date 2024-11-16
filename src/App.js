@@ -5,11 +5,18 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import ChatList from './components/ChatList.js';
+import { useState } from 'react';
 
 library.add(fas, far, fab);
 
 
 function App() {
+  const [selectedIcon, setSelectedIcon] = useState('message');
+  console.log(selectedIcon);
+  const selectIcon = function (iconName) {
+
+    setSelectedIcon(iconName);
+  }
   return (
     <div className="main-container">
       <div className="navbar">
@@ -27,12 +34,9 @@ function App() {
           <FontAwesomeIcon className="custom-icon" icon="fa-brands fa-github" />
         </div>
         <div className="icons-container">
-          <FontAwesomeIcon icon={['fas', 'house']} />
-          <FontAwesomeIcon icon={['far', 'house']} />
-
-          <div>msg</div>
-
-          <div>profile</div>
+          <FontAwesomeIcon onClick={() => { selectIcon('home') }} className={`custom-icon ${selectedIcon === 'home' && 'active-icon'}`} icon="fa-solid fa-house" />
+          <FontAwesomeIcon onClick={() => { selectIcon('message') }} className={`custom-icon ${selectedIcon === 'message' && 'active-icon'}`} icon="fa-solid fa-message" />
+          <FontAwesomeIcon onClick={() => { selectIcon('like') }} className={`custom-icon ${selectedIcon === 'like' && 'active-icon'}`} icon="fa-solid fa-heart" />
           <img className="profile-image"
             src={require('./assets/profileImage1.jpg')}
             alt="profile-photo"
