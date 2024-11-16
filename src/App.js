@@ -5,6 +5,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import ChatList from './components/ChatList.js';
+import MessageScreen from './components/MessageScreen.js';
 import { useState } from 'react';
 
 library.add(fas, far, fab);
@@ -40,17 +41,18 @@ function App() {
           <img className="profile-image"
             src={require('./assets/profileImage1.jpg')}
             alt="profile-photo"
+            title="Edit Profile"
           />
         </div>
       </div>
       <div className="content-container">
         <div className="left-content-container">
           <ChatList />
-
-
         </div>
 
-        <div className="right-content-container">b</div>
+        <div className="right-content-container">
+          <MessageScreen />
+        </div>
       </div>
     </div>
   )
