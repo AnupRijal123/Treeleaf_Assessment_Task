@@ -11,14 +11,49 @@
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #c8c8c8;
+    align-items: center;
 }
 
 .navbar-heading {
     background-color: Red;
     display: flex;
-    align-items: center;
     gap: 5px;
 
+}
+
+.developer-name {
+    color: #fe019a;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.4s ease;
+}
+
+.developer-name:hover {
+    transform: scale(1.1);
+    color: #767676;
+}
+
+.github-code-container {
+    background-color: pink;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.github-link-text {
+    color: #767676;
+    cursor: pointer;
+    transition: transform 0.4s ease;
+}
+
+.github-link-text:hover {
+    text-decoration: underline;
+    transform: scale(1.1);
+}
+
+.custom-icon {
+    color: #000000;
+    font-size: 22px;
 }
 
 .icons-container {
@@ -70,6 +105,9 @@ h5 {
     margin: 0;
 }
 
+a {
+    text-decoration: none;
+}
 
 /* in mobile view left chat part is not showing */
 @media only screen and (max-width:480px) {

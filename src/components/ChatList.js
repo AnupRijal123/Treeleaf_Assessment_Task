@@ -6,7 +6,7 @@ function ChatList() {
         <>
             <div className="chat-list-heading">
                 <h4 className="chat-heading-text">Chats</h4>
-                <FontAwesomeIcon className="chat-heading-icon" icon="fa-solid fa-pen-to-square" />
+                <FontAwesomeIcon className="chat-heading-icon custom-icon" icon="fa-solid fa-pen-to-square" />
 
             </div>
 
@@ -59,7 +59,7 @@ function ChatList() {
                 <div className="username-and-message-container">
                     <h5 className="username-text">peterparker2002</h5>
                     <div className="chat-preview-message">
-                        <p className="chat-preview-message-text">ma aja vyaudina voli vetaula hai</p>
+                        <p className="chat-preview-message-text">ma aja vyaudina voli vetaula hai mero aja bahira jane kaam cha tesaile</p>
                         <div className="chat-preview-time-container">
                             <div className="dot-container">
                                 <p className="dot">.</p>

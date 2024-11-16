@@ -3,9 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 import ChatList from './components/ChatList.js';
 
-library.add(fas, far);
+library.add(fas, far, fab);
 
 
 function App() {
@@ -14,7 +15,16 @@ function App() {
       <div className="navbar">
         <div className="navbar-heading">
           <h4>Treeleaf Assessment Task</h4>
-          <small className="developer-name"> by Anup Rijal</small>
+          <a href="https://anup-rijal-portfolio.web.app/">
+            <p className="developer-name"> by Anup Rijal</p>
+          </a>
+        </div>
+
+        <div className="github-code-container">
+          <a href="https://github.com/AnupRijal123/Treeleaf_Assessment_Task/tree/development-branch">
+            <p className="github-link-text">see code</p>
+          </a>
+          <FontAwesomeIcon className="custom-icon" icon="fa-brands fa-github" />
         </div>
         <div className="icons-container">
           <FontAwesomeIcon icon={['fas', 'house']} />
