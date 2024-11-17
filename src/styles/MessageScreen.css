@@ -64,6 +64,41 @@
     border-radius: 10px;
 }
 
+.message-chat-row {
+    background-color: red;
+}
+
+.left-align-message {
+    background-color: green;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.right-align-message {
+    background-color: orange;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.message-chat-row .message-text {
+    background-color: yellow;
+    width: fit-content;
+    max-width: 40%;
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.left-align-message .message-text {
+    background-color: #e3e3e3;
+}
+
+.right-align-message .message-text {
+    background-color: #fe019a;
+    color: #ffffff;
+}
+
 .bottom-section {
     padding: 10px 20px 0px 20px;
     width: 100%;

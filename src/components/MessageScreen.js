@@ -9,18 +9,15 @@ function MessageScreen() {
     const [messageTextAreaDom, setMessageTextAreaDom] = useState('');
     const [chatsArray, setChatsArray] = useState([]);
     const [paginationLinks, setPaginationLinks] = useState({});
-    // const [apiUrl, setApiUrl] = useState('https://gorest.co.in/public/v1/users');
-    // console.log(chats);
-    // console.log(paginationLinks);
-    // console.log(apiUrl);
+    console.log(chatsArray);
 
     //getting api url from redux store
     let apiURL = useSelector((state) => {
         return state.apiUrl;
     });
-    console.log(apiURL);
+    // console.log(apiURL);
 
-    console.log(paginationLinks);
+    // console.log(paginationLinks);
     const changeUrl = useDispatch();
 
 
@@ -76,29 +73,13 @@ function MessageScreen() {
                     </div>
                 </div>
                 <div className="chats-screen-container">
-                    {chatsArray.map((item) => (
-                        <p key={item.id}>{item.name}</p>
+                    {chatsArray.map((item, index) => (
+                        <div className={index % 2 === 0 ? 'message-chat-row left-align-message' : 'message-chat-row right-align-message'}>
+                            <p className="message-text" key={item.id}>{item.name}{index}</p>
+                        </div>
                     ))}
 
-                    <h4>previous:{paginationLinks.previous}</h4>
-                    <h4>current :{paginationLinks.current}</h4>
-                    <h4>next:{paginationLinks.next}</h4>
-                    {/* 
-                    <button onClick={() => {
-                        console.log('previous clicked');
-                        if (paginationLinks.previous !== null) {
-                            setApiUrl(paginationLinks.previous);
-                        }
-                    }}>PREVIOUS</button>
-                    <button onClick={() => {
-                        console.log('next clicked');
-                        setApiUrl(paginationLinks.next);
 
-
-                    }}>NEXT</button> */}
-
-                    <button onClick={() => changePage('go-to-previous-page')}>PREVIOUS</button>
-                    <button onClick={() => changePage('go-to-next-page')}>NEXT</button>
 
                 </div>
             </div>
@@ -114,7 +95,17 @@ function MessageScreen() {
                         placeholder="Message..."
                     />
                     <button className="send-button">Send</button>
+
                 </div>
+            </div>
+            <div>
+                <h4>previous:{paginationLinks.previous}</h4>
+                <h4>current :{paginationLinks.current}</h4>
+                <h4>next:{paginationLinks.next}</h4>
+
+
+                <button onClick={() => changePage('go-to-previous-page')}>PREVIOUS</button>
+                <button onClick={() => changePage('go-to-next-page')}>NEXT</button>
             </div>
         </>
     )
