@@ -7,6 +7,8 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import ChatList from './components/ChatList.js';
 import MessageScreen from './components/MessageScreen.js';
 import { useState } from 'react';
+import { store } from './redux/store.js';
+import { Provider } from 'react-redux';
 
 library.add(fas, far, fab);
 
@@ -50,7 +52,10 @@ function App() {
         </div>
 
         <div className="right-content-container">
-          <MessageScreen />
+          <Provider store={store}>
+            <MessageScreen />
+          </Provider>
+
         </div>
       </div>
     </div>

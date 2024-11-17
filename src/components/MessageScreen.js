@@ -2,34 +2,58 @@ import '../styles/MessageScreen.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUrl } from '../redux/action.js';
 
 function MessageScreen() {
     const [messageTextAreaDom, setMessageTextAreaDom] = useState('');
-    const [chats, setChats] = useState([]);
+    const [chatsArray, setChatsArray] = useState([]);
     const [paginationLinks, setPaginationLinks] = useState({});
-    const [apiUrl, setApiUrl] = useState('https://gorest.co.in/public/v1/users');
+    // const [apiUrl, setApiUrl] = useState('https://gorest.co.in/public/v1/users');
     // console.log(chats);
     // console.log(paginationLinks);
-    console.log(apiUrl);
+    // console.log(apiUrl);
+
+    //getting api url from redux store
+    let apiURL = useSelector((state) => {
+        return state.apiUrl;
+    });
+    console.log(apiURL);
+
+    console.log(paginationLinks);
+    const changeUrl = useDispatch();
+
+
+    useEffect(() => {
+        console.log('api changed');
+        axios.get(apiURL).then((response) => {
+            setChatsArray(response.data.data);
+            setPaginationLinks(response.data.meta.pagination.links);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }, [apiURL]);
 
     useEffect(() => {
         const textAreaDom = document.getElementById('message-textarea');
         setMessageTextAreaDom(textAreaDom);
+    }, []);
 
-        //api call
-        console.log('mounted');
-        axios.get(apiUrl).then((response) => {
-            // console.log(response.data)
-            // console.log(response.data.meta.pagination.links);
-            setChats(response.data.data);
-            setPaginationLinks(response.data.meta.pagination.links);
-
-        }).catch((error) => {
-            console.log(error)
-        });
-
-    }, [apiUrl]);
-
+    const changePage = function (pageName) {
+        console.log(pageName);
+        if (pageName === 'go-to-previous-page') {
+            console.log('previous clicked');
+            if (paginationLinks.previous !== null) {
+                changeUrl(getUrl(paginationLinks.previous)); //redux ma new url dispatch gareko
+            }
+        }
+        if (pageName === 'go-to-next-page') {
+            console.log('next clicked');
+            if (paginationLinks.next !== null) {
+                changeUrl(getUrl(paginationLinks.next)); //redux ma new url dispatch gareko
+            }
+        }
+    }
     const handleInputChange = () => {
         messageTextAreaDom.style.height = 'auto';
         messageTextAreaDom.style.height = `${messageTextAreaDom.scrollHeight}px`;
@@ -52,14 +76,14 @@ function MessageScreen() {
                     </div>
                 </div>
                 <div className="chats-screen-container">
-                    {chats.map((item) => (
+                    {chatsArray.map((item) => (
                         <p key={item.id}>{item.name}</p>
                     ))}
 
                     <h4>previous:{paginationLinks.previous}</h4>
                     <h4>current :{paginationLinks.current}</h4>
                     <h4>next:{paginationLinks.next}</h4>
-
+                    {/* 
                     <button onClick={() => {
                         console.log('previous clicked');
                         if (paginationLinks.previous !== null) {
@@ -71,7 +95,10 @@ function MessageScreen() {
                         setApiUrl(paginationLinks.next);
 
 
-                    }}>NEXT</button>
+                    }}>NEXT</button> */}
+
+                    <button onClick={() => changePage('go-to-previous-page')}>PREVIOUS</button>
+                    <button onClick={() => changePage('go-to-next-page')}>NEXT</button>
 
                 </div>
             </div>
