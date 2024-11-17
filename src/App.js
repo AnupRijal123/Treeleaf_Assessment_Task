@@ -35,7 +35,7 @@ function App() {
           </a>
           <FontAwesomeIcon className="custom-icon" icon="fa-brands fa-github" />
         </div>
-        <div className="icons-container">
+        <div className="icons-container active-icon-animation">
           <FontAwesomeIcon onClick={() => { selectIcon('home') }} className={`custom-icon ${selectedIcon === 'home' && 'active-icon'}`} icon="fa-solid fa-house" />
           <FontAwesomeIcon onClick={() => { selectIcon('message') }} className={`custom-icon ${selectedIcon === 'message' && 'active-icon'}`} icon="fa-solid fa-message" />
           <FontAwesomeIcon onClick={() => { selectIcon('like') }} className={`custom-icon ${selectedIcon === 'like' && 'active-icon'}`} icon="fa-solid fa-heart" />
