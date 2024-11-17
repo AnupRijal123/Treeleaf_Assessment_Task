@@ -13,7 +13,6 @@ library.add(fas, far, fab);
 
 function App() {
   const [selectedIcon, setSelectedIcon] = useState('message');
-  console.log(selectedIcon);
   const selectIcon = function (iconName) {
 
     setSelectedIcon(iconName);
