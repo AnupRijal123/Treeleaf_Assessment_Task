@@ -9,9 +9,9 @@ function MessageScreen() {
     const [messageTextAreaDom, setMessageTextAreaDom] = useState('');
     const [paginationLinks, setPaginationLinks] = useState({});
     const [allChatsArray, setAllChatsArray] = useState([]);
-    console.log('all chat array', allChatsArray);
+    const [message, setMessage] = useState('hello');
 
-
+    console.log(allChatsArray);
     //getting api url from redux store
     let apiURL = useSelector((state) => {
         return state.apiUrl;
@@ -24,7 +24,7 @@ function MessageScreen() {
 
     useEffect(() => {
         axios.get(apiURL).then((response) => {
-            console.log('response', response.data.data);
+            // console.log('response', response.data.data);
             setPaginationLinks(response.data.meta.pagination.links);
 
             /* here i want to check if allChatsArray has object that
@@ -87,6 +87,11 @@ function MessageScreen() {
     const handleInputChange = () => {
         messageTextAreaDom.style.height = 'auto';
         messageTextAreaDom.style.height = `${messageTextAreaDom.scrollHeight}px`;
+    }
+    const sendMessage = function () {
+        console.log('send clicked');
+        setAllChatsArray([...allChatsArray, { id: Math.random() * 123456789, name: message }]);
+        setMessage('');
 
     }
     return (
@@ -108,9 +113,7 @@ function MessageScreen() {
                 <div className="chats-screen-container">
                     {allChatsArray.map((item, index) => (
                         <div key={item.id} className={index % 2 === 0 ? 'message-chat-row left-align-message' : 'message-chat-row right-align-message'}>
-                            <p className="message-text">{item.name}/
-                                {item.email}/{item.gender}
-                            </p>
+                            <p className="message-text">{item.name} {item.email} {item.gender}</p>
                         </div>
                     ))}
 
@@ -124,12 +127,24 @@ function MessageScreen() {
                     <FontAwesomeIcon className="custom-icon" icon="fa-regular fa-image" />
                 </div>
                 <div className="message-input-container">
+                    {message}
                     <textarea
                         id="message-textarea"
                         onInput={handleInputChange}
                         placeholder="Message..."
+                        value={message}
+                        onChange={(event) => {
+                            console.log(event.target.value)
+                            setMessage(event.target.value)
+                        }}
                     />
-                    <button className="send-button">Send</button>
+                    {message !== '' &&
+                        <div onClick={sendMessage} className="send-arrow-icon-container" title="Send Message">
+                            <FontAwesomeIcon className="send-arrow-icon" icon="fa-solid fa-arrow-up" />
+                        </div>
+                    }
+
+
 
                 </div>
             </div>

@@ -38,7 +38,7 @@
 }
 
 .call-and-video-icons-div .custom-icon:hover {
-    color: #fe019a;
+    color: #f79f9f;
     transform: scale(1.2);
 }
 
@@ -64,18 +64,13 @@
     border-radius: 10px;
 }
 
-.message-chat-row {
-    background-color: red;
-}
 
 .left-align-message {
-    background-color: green;
     display: flex;
     justify-content: flex-start;
 }
 
 .right-align-message {
-    background-color: orange;
     display: flex;
     justify-content: flex-end;
 }
@@ -92,11 +87,11 @@
 }
 
 .left-align-message .message-text {
-    background-color: #e3e3e3;
+    background-color: #f1f1f1;
 }
 
 .right-align-message .message-text {
-    background-color: #fe019a;
+    background-color: #f79f9f;
     color: #ffffff;
 }
 
@@ -141,21 +136,23 @@ textarea::placeholder {
         sans-serif;
 }
 
-.send-button {
+
+.send-arrow-icon-container {
     background-color: #000000;
-    color: #ffffff;
-    border: none;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 14px;
-    padding: 1px 10px;
-    height: 30px;
+    height: fit-content;
+    padding: 10px 15px;
+    border-radius: 50%;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 }
 
-.send-button:hover {
-    background-color: #fe019a;
+.send-arrow-icon-container:hover {
+    background-color: #f79f9f;
+}
+
+.send-arrow-icon {
+    color: #ffffff;
+    font-size: 24px;
 }
 
 .message-icons-container .custom-icon {

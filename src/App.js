@@ -23,7 +23,7 @@ function App() {
     <div className="main-container">
       <div className="navbar">
         <div className="navbar-heading">
-          <h4>Chat Message Design</h4>
+          <h4>Chat Message Design (React+Css)</h4>
           <a href="https://anup-rijal-portfolio.web.app/">
             <p className="developer-name"> by Anup Rijal</p>
           </a>

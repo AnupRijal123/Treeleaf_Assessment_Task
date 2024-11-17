@@ -20,7 +20,7 @@
 }
 
 .developer-name {
-    color: #fe019a;
+    color: #f79f9f;
     cursor: pointer;
     font-size: 12px;
     transition: all 0.4s ease;
@@ -70,7 +70,7 @@
 }
 
 .active-icon {
-    color: #fe019a !important;
+    color: #f79f9f !important;
     transform: scale(1.3);
 }
 
