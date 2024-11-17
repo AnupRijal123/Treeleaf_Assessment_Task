@@ -74,8 +74,10 @@ function MessageScreen() {
                 </div>
                 <div className="chats-screen-container">
                     {chatsArray.map((item, index) => (
-                        <div className={index % 2 === 0 ? 'message-chat-row left-align-message' : 'message-chat-row right-align-message'}>
-                            <p className="message-text" key={item.id}>{item.name}{index}</p>
+                        <div key={item.id} className={index % 2 === 0 ? 'message-chat-row left-align-message' : 'message-chat-row right-align-message'}>
+                            <p className="message-text">{item.name}/
+                                {item.email}/{item.gender}
+                            </p>
                         </div>
                     ))}
 
