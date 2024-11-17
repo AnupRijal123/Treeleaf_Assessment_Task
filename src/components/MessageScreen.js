@@ -7,9 +7,10 @@ import { getUrl } from '../redux/action.js';
 
 function MessageScreen() {
     const [messageTextAreaDom, setMessageTextAreaDom] = useState('');
-    const [chatsArray, setChatsArray] = useState([]);
     const [paginationLinks, setPaginationLinks] = useState({});
-    console.log(chatsArray);
+    const [allChatsArray, setAllChatsArray] = useState([]);
+    console.log('all chat array', allChatsArray);
+
 
     //getting api url from redux store
     let apiURL = useSelector((state) => {
@@ -22,10 +23,42 @@ function MessageScreen() {
 
 
     useEffect(() => {
-        console.log('api changed');
         axios.get(apiURL).then((response) => {
-            setChatsArray(response.data.data);
+            console.log('response', response.data.data);
             setPaginationLinks(response.data.meta.pagination.links);
+
+            /* here i want to check if allChatsArray has object that
+             is also present in response.data.data array,if no object
+             in response matches in allChatsArray i.e it will return 
+             undedined then only reponse array
+             objects are pushed or prepend in allChatsArray
+            
+            // const matchingUser = allChatsArray.find((item) => {
+            //     return item.id === response.data.data[0].id
+            // });
+            // console.log(matchingUser);
+            // if (matchingUser === undefined) {
+            //     setAllChatsArray([...response.data.data, ...allChatsArray]);
+            // }
+
+            this code is written is same as below code this code 
+            gave warning so i wrote below code 
+            */
+
+            setAllChatsArray((previousAllChatArray) => {
+                //only proceed when previoiusAllChatArray is not empty
+                if (previousAllChatArray) {
+                    const matchingUser = previousAllChatArray.find((item) => {
+                        return item.id === response.data.data[0].id
+                    });
+                    //if no matching user is found 
+                    if (matchingUser === undefined) {
+                        return [...response.data.data, ...previousAllChatArray]
+                    }
+                    return previousAllChatArray;
+                }
+            });
+
         }).catch((error) => {
             console.log(error);
         });
@@ -73,7 +106,7 @@ function MessageScreen() {
                     </div>
                 </div>
                 <div className="chats-screen-container">
-                    {chatsArray.map((item, index) => (
+                    {allChatsArray.map((item, index) => (
                         <div key={item.id} className={index % 2 === 0 ? 'message-chat-row left-align-message' : 'message-chat-row right-align-message'}>
                             <p className="message-text">{item.name}/
                                 {item.email}/{item.gender}
