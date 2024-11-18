@@ -15,7 +15,8 @@ function MessageScreen() {
     const chatScreenRef = useRef(null);
     const [moveToBottom, setMoveToBottom] = useState(true);
     const [moveToMiddle, setMoveToMiddle] = useState(false);
-    const [showButtonAnimation, setShowButtonAnimation] = useState(true);
+    const [showButtonAnimation, setShowButtonAnimation] = useState(false);
+    const [showButton, setShowButton] = useState(false);
     console.log(chatScreenRef);
     // console.log(allChatsArray);
     //getting api url from redux store
@@ -28,6 +29,7 @@ function MessageScreen() {
     const changeUrl = useDispatch();
 
     function scrollToBottom() {
+        setShowButton(false);
         console.log('scroll bottom');
         const chatScreenContainerDom = chatScreenRef.current;
         chatScreenContainerDom.scrollTop = chatScreenContainerDom.scrollHeight;
@@ -53,20 +55,6 @@ function MessageScreen() {
             scrollToMiddle();
         }
     }, [allChatsArray, moveToBottom, moveToMiddle]); // moveToBottom, moveToMiddle these is not need here it gave warning so only allChatsArray is need in this dependency array
-
-    // const scrollToBottom = function () {
-    //     console.log('scrolling to bottom');
-    //     const chatScreenContainerDom = document.getElementById('chat-screen');
-    //     //top bata kati pixel scroll garne vanera scrollTop le dinxa
-    //     if (chatScreenContainerDom) {
-    //         chatScreenContainerDom.scrollTop = chatScreenContainerDom.scrollHeight;
-    //     }
-
-    // }
-    // useEffect(() => {
-    //     scrollToBottom();
-    // }, [allChatsArray]);
-
 
 
     useEffect(() => {
@@ -122,9 +110,27 @@ function MessageScreen() {
         });
     }, [apiURL]);
 
+    //checking scroll position of chatscreen
+    const handleChatScreenScroll = function () {
+        console.log('scrolled');
+        const chatScreenDom = chatScreenRef.current;
+        console.log(chatScreenDom.scrollTop);
+        if (chatScreenDom.scrollTop === 0) {
+            setShowButton(true);
+            setShowButtonAnimation(true);
+
+            setTimeout(() => {
+                setShowButtonAnimation(false);
+            }, 1000);
+        }
+
+    }
     useEffect(() => {
         const textAreaDom = document.getElementById('message-textarea');
         setMessageTextAreaDom(textAreaDom);
+
+        const chatScreenDom = chatScreenRef.current;
+        chatScreenDom.addEventListener('scroll', handleChatScreenScroll);
     }, []);
 
     const changePage = function (pageName) {
@@ -202,12 +208,15 @@ function MessageScreen() {
                     }
 
                 </div>
-                <div className={`chat-down-button-container ${showButtonAnimation === true && 'animate-button-container'}`}>
-                    <div onClick={scrollToBottom} className="chat-down-icon-container">
-                        <FontAwesomeIcon className="chat-down-icon" icon="fa-solid fa-angle-down" />
+                {showButton === true &&
+                    <div className={`chat-down-button-container ${showButtonAnimation === true && 'animate-button-container'}`}>
+                        <div onClick={scrollToBottom} className="chat-down-icon-container">
+                            <FontAwesomeIcon className="chat-down-icon" icon="fa-solid fa-angle-down" />
 
+                        </div>
                     </div>
-                </div>
+                }
+
                 <div className="chats-screen-container" ref={chatScreenRef} >
                     {allChatsArray.map((item, index) => {
                         // checking if item object is not empty
