@@ -153,9 +153,3 @@ a {
     }
 
 }
-
-@media only screen and (max-width:720px) {
-    .developer-name {
-        display: none;
-    }
-}

@@ -1,19 +1,22 @@
 import '../styles/MessageScreen.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUrl } from '../redux/action.js';
 
 function MessageScreen() {
-    const [messageTextAreaDom, setMessageTextAreaDom] = useState('');
+    const [messageTextAreaDom, setMessageTextAreaDom] = useState(null);
     const [paginationLinks, setPaginationLinks] = useState({});
     const [allChatsArray, setAllChatsArray] = useState([]);
     const [message, setMessage] = useState('');
     const [showLoading, setShowLoading] = useState(true);
     const [showError, setShowError] = useState(false);
-
-    console.log(allChatsArray);
+    const chatScreenRef = useRef(null);
+    const [moveToBottom, setMoveToBottom] = useState(true);
+    const [moveToMiddle, setMoveToMiddle] = useState(false);
+    console.log(chatScreenRef);
+    // console.log(allChatsArray);
     //getting api url from redux store
     let apiURL = useSelector((state) => {
         return state.apiUrl;
@@ -22,6 +25,47 @@ function MessageScreen() {
 
     // console.log(paginationLinks);
     const changeUrl = useDispatch();
+
+    function scrollToBottom() {
+        console.log('scroll bottom');
+        const chatScreenContainerDom = chatScreenRef.current;
+        chatScreenContainerDom.scrollTop = chatScreenContainerDom.scrollHeight;
+    }
+    function scrollToMiddle() {
+        console.log('scroll middle');
+        const chatScreenDom = chatScreenRef.current;
+        chatScreenDom.scrollTop = 600;
+
+    }
+    useEffect(() => {
+        console.log('array changed');
+        if (moveToBottom === true) {
+            //scroll to bottom
+            setMoveToMiddle(false);
+            scrollToBottom();
+
+
+        }
+        if (moveToMiddle === true) {
+            //scroll to middle
+            setMoveToBottom(false);
+            scrollToMiddle();
+        }
+    }, [allChatsArray, moveToBottom, moveToMiddle]); // moveToBottom, moveToMiddle these is not need here it gave warning so only allChatsArray is need in this dependency array
+
+    // const scrollToBottom = function () {
+    //     console.log('scrolling to bottom');
+    //     const chatScreenContainerDom = document.getElementById('chat-screen');
+    //     //top bata kati pixel scroll garne vanera scrollTop le dinxa
+    //     if (chatScreenContainerDom) {
+    //         chatScreenContainerDom.scrollTop = chatScreenContainerDom.scrollHeight;
+    //     }
+
+    // }
+    // useEffect(() => {
+    //     scrollToBottom();
+    // }, [allChatsArray]);
+
 
 
     useEffect(() => {
@@ -95,6 +139,7 @@ function MessageScreen() {
             if (paginationLinks.next !== null) {
                 changeUrl(getUrl(paginationLinks.next)); //redux ma new url dispatch gareko
                 setShowLoading(true);
+                setMoveToMiddle(true);
             }
         }
     }
@@ -103,6 +148,8 @@ function MessageScreen() {
         messageTextAreaDom.style.height = `${messageTextAreaDom.scrollHeight}px`;
     }
     const sendMessage = function () {
+        setMoveToBottom(true);
+
         console.log('send clicked');
 
         console.log('length', allChatsArray.length);
@@ -127,6 +174,7 @@ function MessageScreen() {
         }
         setMessage('');
     }
+
     return (
         <>
             <div className="top-section">
@@ -153,14 +201,32 @@ function MessageScreen() {
                     }
 
                 </div>
-                <div className="chats-screen-container">
-                    {allChatsArray.map((item, index) => (
-                        <div key={item.id} className={index % 2 === 0 ? 'message-chat-row left-align-message' : 'message-chat-row right-align-message'}>
-                            {Object.keys(item).length !== 0 &&
-                                <p className="message-text">{item.name} {item.email} {item.gender}</p>
-                            }
-                        </div>
-                    ))}
+                <div className="chats-screen-container" ref={chatScreenRef} >
+                    {allChatsArray.map((item, index) => {
+                        // checking if item object is not empty
+                        if (Object.keys(item).length !== 0) {
+                            return (
+                                <div key={item.id} className={index % 2 === 0 ? 'message-chat-row left-align-message' : 'message-chat-row right-align-message'}>
+                                    <p className="message-text">{item.name} {item.email} {item.gender}</p>
+                                </div>
+                            )
+                        }
+                        return item.name; //map should return something otherwise it gave warning so i wrote this return,this code is not needed
+                    }
+
+
+
+
+
+
+
+                        // <div key={item.id} className={index % 2 === 0 ? 'message-chat-row left-align-message' : 'message-chat-row right-align-message'}>
+                        //     {Object.keys(item).length !== 0 &&
+                        //         <p className="message-text">{item.name} {item.email} {item.gender}</p>
+                        //     }
+                        // </div>
+
+                    )}
 
 
 
