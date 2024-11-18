@@ -15,6 +15,7 @@ function MessageScreen() {
     const chatScreenRef = useRef(null);
     const [moveToBottom, setMoveToBottom] = useState(true);
     const [moveToMiddle, setMoveToMiddle] = useState(false);
+    const [showButtonAnimation, setShowButtonAnimation] = useState(true);
     console.log(chatScreenRef);
     // console.log(allChatsArray);
     //getting api url from redux store
@@ -200,6 +201,12 @@ function MessageScreen() {
                         <p className="alert-message-text error-message-text">Something went wrong.Try again</p>
                     }
 
+                </div>
+                <div className={`chat-down-button-container ${showButtonAnimation === true && 'animate-button-container'}`}>
+                    <div onClick={scrollToBottom} className="chat-down-icon-container">
+                        <FontAwesomeIcon className="chat-down-icon" icon="fa-solid fa-angle-down" />
+
+                    </div>
                 </div>
                 <div className="chats-screen-container" ref={chatScreenRef} >
                     {allChatsArray.map((item, index) => {
