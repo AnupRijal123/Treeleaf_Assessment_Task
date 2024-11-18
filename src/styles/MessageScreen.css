@@ -237,3 +237,8 @@ textarea::placeholder {
     color: #767676;
     transform: scale(1.2);
 }
+
+.next-button,
+.previous-button {
+    display: none;
+}

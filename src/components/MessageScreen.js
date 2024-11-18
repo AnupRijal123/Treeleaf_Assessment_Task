@@ -17,7 +17,8 @@ function MessageScreen() {
     const [moveToMiddle, setMoveToMiddle] = useState(false);
     const [showButtonAnimation, setShowButtonAnimation] = useState(false);
     const [showButton, setShowButton] = useState(false);
-    console.log(chatScreenRef);
+    const nextButtonRef = useRef();
+
     // console.log(allChatsArray);
     //getting api url from redux store
     let apiURL = useSelector((state) => {
@@ -110,11 +111,16 @@ function MessageScreen() {
         });
     }, [apiURL]);
 
+
+
     //checking scroll position of chatscreen
     const handleChatScreenScroll = function () {
         console.log('scrolled');
         const chatScreenDom = chatScreenRef.current;
         console.log(chatScreenDom.scrollTop);
+
+        const nextButtonDom = nextButtonRef.current;
+        console.log('next button', nextButtonDom);
         if (chatScreenDom.scrollTop === 0) {
             setShowButton(true);
             setShowButtonAnimation(true);
@@ -122,15 +128,36 @@ function MessageScreen() {
             setTimeout(() => {
                 setShowButtonAnimation(false);
             }, 1000);
+
+            //when chat screen is scrolled to 0 i.e top next button is clicked
+            nextButtonDom.click();
+
+        }
+        if (chatScreenDom.scrollTop + chatScreenDom.clientHeight >= chatScreenDom.scrollHeight - 200) {
+            setShowButton(false);
         }
 
+
+
     }
+
+
     useEffect(() => {
+
+        const nextButtonDom = nextButtonRef.current;
+        console.log('next button', nextButtonDom);
+
         const textAreaDom = document.getElementById('message-textarea');
         setMessageTextAreaDom(textAreaDom);
 
         const chatScreenDom = chatScreenRef.current;
         chatScreenDom.addEventListener('scroll', handleChatScreenScroll);
+
+        return () => {
+            chatScreenDom.removeEventListener('scroll', handleChatScreenScroll);
+        }
+
+
     }, []);
 
     const changePage = function (pageName) {
@@ -146,6 +173,7 @@ function MessageScreen() {
             if (paginationLinks.next !== null) {
                 changeUrl(getUrl(paginationLinks.next)); //redux ma new url dispatch gareko
                 setShowLoading(true);
+                setMoveToBottom(false);
                 setMoveToMiddle(true);
             }
         }
@@ -155,6 +183,7 @@ function MessageScreen() {
         messageTextAreaDom.style.height = `${messageTextAreaDom.scrollHeight}px`;
     }
     const sendMessage = function () {
+        setMoveToMiddle(false);
         setMoveToBottom(true);
 
         console.log('send clicked');
@@ -201,7 +230,7 @@ function MessageScreen() {
 
                 <div className="alert-container">
                     {showLoading === true &&
-                        <p className="alert-message-text">Loading chats</p>
+                        <p className="alert-message-text">Loading messages</p>
                     }
                     {showError === true &&
                         <p className="alert-message-text error-message-text">Something went wrong.Try again</p>
@@ -271,18 +300,12 @@ function MessageScreen() {
                         </div>
                     }
 
-
-
                 </div>
             </div>
             <div>
-                <h4>previous:{paginationLinks.previous}</h4>
-                <h4>current :{paginationLinks.current}</h4>
-                <h4>next:{paginationLinks.next}</h4>
 
-
-                <button onClick={() => changePage('go-to-previous-page')}>PREVIOUS</button>
-                <button onClick={() => changePage('go-to-next-page')}>NEXT</button>
+                <button onClick={() => changePage('go-to-previous-page')} className="previous-button">PREVIOUS</button>
+                <button ref={nextButtonRef} onClick={() => changePage('go-to-next-page')} className="next-button">NEXT</button>
             </div>
         </>
     )
