@@ -75,6 +75,11 @@
     justify-content: flex-end;
 }
 
+.message-chat-row {
+    background-color: green;
+    padding: 2px 0px;
+}
+
 .message-chat-row .message-text {
     background-color: yellow;
     width: fit-content;

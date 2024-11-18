@@ -90,9 +90,28 @@ function MessageScreen() {
     }
     const sendMessage = function () {
         console.log('send clicked');
-        setAllChatsArray([...allChatsArray, { id: Math.random() * 123456789, name: message }]);
-        setMessage('');
 
+        console.log('length', allChatsArray.length);
+        const lastElementOfArray = allChatsArray[allChatsArray.length - 1];
+        console.log(lastElementOfArray);
+        const lastIndex = allChatsArray.indexOf(lastElementOfArray);
+        console.log(lastIndex);
+        /* if last index is odd next message will 
+            be stored at even index so inserting empty 
+            object and then inserting new message
+        */
+        const newMessageObject = {
+            id: Math.random() * 123456789,
+            name: message
+        };
+        if (lastIndex % 2 !== 0) {
+            console.log(...allChatsArray.slice(0));
+            setAllChatsArray([...allChatsArray.slice(0), {}, newMessageObject])
+
+        } else {
+            setAllChatsArray([...allChatsArray, newMessageObject]);
+        }
+        setMessage('');
     }
     return (
         <>
@@ -113,7 +132,9 @@ function MessageScreen() {
                 <div className="chats-screen-container">
                     {allChatsArray.map((item, index) => (
                         <div key={item.id} className={index % 2 === 0 ? 'message-chat-row left-align-message' : 'message-chat-row right-align-message'}>
-                            <p className="message-text">{item.name} {item.email} {item.gender}</p>
+                            {Object.keys(item).length !== 0 &&
+                                <p className="message-text">{item.name} {item.email} {item.gender}</p>
+                            }
                         </div>
                     ))}
 
