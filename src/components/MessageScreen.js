@@ -19,30 +19,25 @@ function MessageScreen() {
     const [showButton, setShowButton] = useState(false);
     const nextButtonRef = useRef();
 
-    // console.log(allChatsArray);
+
     //getting api url from redux store
     let apiURL = useSelector((state) => {
         return state.apiUrl;
     });
-    // console.log(apiURL);
 
-    // console.log(paginationLinks);
     const changeUrl = useDispatch();
 
     function scrollToBottom() {
         setShowButton(false);
-        console.log('scroll bottom');
         const chatScreenContainerDom = chatScreenRef.current;
         chatScreenContainerDom.scrollTop = chatScreenContainerDom.scrollHeight;
     }
     function scrollToMiddle() {
-        console.log('scroll middle');
         const chatScreenDom = chatScreenRef.current;
         chatScreenDom.scrollTop = 600;
 
     }
     useEffect(() => {
-        console.log('array changed');
         if (moveToBottom === true) {
             //scroll to bottom
             setMoveToMiddle(false);
@@ -62,8 +57,6 @@ function MessageScreen() {
         axios.get(apiURL).then((response) => {
             setShowError(false);
             setShowLoading(false);
-
-            // console.log('response', response.data.data);
             setPaginationLinks(response.data.meta.pagination.links);
 
             /* here i want to check if allChatsArray has object that
@@ -75,7 +68,6 @@ function MessageScreen() {
             // const matchingUser = allChatsArray.find((item) => {
             //     return item.id === response.data.data[0].id
             // });
-            // console.log(matchingUser);
             // if (matchingUser === undefined) {
             //     setAllChatsArray([...response.data.data, ...allChatsArray]);
             // }
@@ -99,11 +91,6 @@ function MessageScreen() {
                 }
             });
 
-
-
-
-
-
         }).catch((error) => {
             console.log(error);
             setShowLoading(false);
@@ -115,12 +102,9 @@ function MessageScreen() {
 
     //checking scroll position of chatscreen
     const handleChatScreenScroll = function () {
-        console.log('scrolled');
         const chatScreenDom = chatScreenRef.current;
-        console.log(chatScreenDom.scrollTop);
 
         const nextButtonDom = nextButtonRef.current;
-        console.log('next button', nextButtonDom);
         if (chatScreenDom.scrollTop === 0) {
             setShowButton(true);
             setShowButtonAnimation(true);
@@ -131,22 +115,14 @@ function MessageScreen() {
 
             //when chat screen is scrolled to 0 i.e top next button is clicked
             nextButtonDom.click();
-
         }
+
         if (chatScreenDom.scrollTop + chatScreenDom.clientHeight >= chatScreenDom.scrollHeight - 200) {
             setShowButton(false);
         }
-
-
-
     }
 
-
     useEffect(() => {
-
-        const nextButtonDom = nextButtonRef.current;
-        console.log('next button', nextButtonDom);
-
         const textAreaDom = document.getElementById('message-textarea');
         setMessageTextAreaDom(textAreaDom);
 
@@ -156,20 +132,15 @@ function MessageScreen() {
         return () => {
             chatScreenDom.removeEventListener('scroll', handleChatScreenScroll);
         }
-
-
     }, []);
 
     const changePage = function (pageName) {
-        console.log(pageName);
         if (pageName === 'go-to-previous-page') {
-            console.log('previous clicked');
             if (paginationLinks.previous !== null) {
                 changeUrl(getUrl(paginationLinks.previous)); //redux ma new url dispatch gareko
             }
         }
         if (pageName === 'go-to-next-page') {
-            console.log('next clicked');
             if (paginationLinks.next !== null) {
                 changeUrl(getUrl(paginationLinks.next)); //redux ma new url dispatch gareko
                 setShowLoading(true);
@@ -186,13 +157,8 @@ function MessageScreen() {
         setMoveToMiddle(false);
         setMoveToBottom(true);
 
-        console.log('send clicked');
-
-        console.log('length', allChatsArray.length);
         const lastElementOfArray = allChatsArray[allChatsArray.length - 1];
-        console.log(lastElementOfArray);
         const lastIndex = allChatsArray.indexOf(lastElementOfArray);
-        console.log(lastIndex);
         /* if last index is odd next message will 
             be stored at even index so inserting empty 
             object and then inserting new message
@@ -202,7 +168,6 @@ function MessageScreen() {
             name: message
         };
         if (lastIndex % 2 !== 0) {
-            console.log(...allChatsArray.slice(0));
             setAllChatsArray([...allChatsArray.slice(0), {}, newMessageObject])
 
         } else {
@@ -259,21 +224,7 @@ function MessageScreen() {
                         return item.name; //map should return something otherwise it gave warning so i wrote this return,this code is not needed
                     }
 
-
-
-
-
-
-
-                        // <div key={item.id} className={index % 2 === 0 ? 'message-chat-row left-align-message' : 'message-chat-row right-align-message'}>
-                        //     {Object.keys(item).length !== 0 &&
-                        //         <p className="message-text">{item.name} {item.email} {item.gender}</p>
-                        //     }
-                        // </div>
-
                     )}
-
-
 
                 </div>
             </div>
@@ -290,7 +241,6 @@ function MessageScreen() {
                         placeholder="Message..."
                         value={message}
                         onChange={(event) => {
-                            console.log(event.target.value)
                             setMessage(event.target.value)
                         }}
                     />

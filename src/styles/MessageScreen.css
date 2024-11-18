@@ -1,10 +1,10 @@
 .top-section {
-    background-color: yellow;
     height: 85%;
     position: relative;
 }
 
 .message-screen-heading {
+    background-color: #ffffff;
     border-bottom: 1px solid #c8c8c8;
     position: absolute;
     width: 100%;
@@ -43,7 +43,6 @@
 }
 
 .alert-container {
-    background-color: yellow;
     position: absolute;
     top: 50px;
     z-index: 2;
@@ -112,7 +111,6 @@
 }
 
 .chats-screen-container {
-    background-color: blue;
     position: absolute;
     top: 0;
     width: 100%;
@@ -121,6 +119,7 @@
     box-sizing: border-box;
     overflow: auto;
     z-index: 1;
+    scroll-behavior: smooth;
 }
 
 .chats-screen-container::-webkit-scrollbar {
