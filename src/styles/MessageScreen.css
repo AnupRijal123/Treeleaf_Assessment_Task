@@ -9,7 +9,7 @@
     position: absolute;
     width: 100%;
     box-sizing: border-box;
-    z-index: 2;
+    z-index: 3;
     height: 49px;
 }
 
@@ -40,6 +40,31 @@
 .call-and-video-icons-div .custom-icon:hover {
     color: #f79f9f;
     transform: scale(1.2);
+}
+
+.alert-container {
+    background-color: yellow;
+    position: absolute;
+    top: 50px;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+
+}
+
+.alert-message-text {
+    color: #767676;
+    font-size: 14px;
+    padding: 1px 5px;
+    border-radius: 5px;
+    backdrop-filter: blur(20px);
+
+}
+
+.error-message-text {
+    color: #FF0000 !important;
 }
 
 .chats-screen-container {

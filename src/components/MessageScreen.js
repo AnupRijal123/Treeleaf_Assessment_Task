@@ -9,7 +9,9 @@ function MessageScreen() {
     const [messageTextAreaDom, setMessageTextAreaDom] = useState('');
     const [paginationLinks, setPaginationLinks] = useState({});
     const [allChatsArray, setAllChatsArray] = useState([]);
-    const [message, setMessage] = useState('hello');
+    const [message, setMessage] = useState('');
+    const [showLoading, setShowLoading] = useState(true);
+    const [showError, setShowError] = useState(false);
 
     console.log(allChatsArray);
     //getting api url from redux store
@@ -24,6 +26,9 @@ function MessageScreen() {
 
     useEffect(() => {
         axios.get(apiURL).then((response) => {
+            setShowError(false);
+            setShowLoading(false);
+
             // console.log('response', response.data.data);
             setPaginationLinks(response.data.meta.pagination.links);
 
@@ -53,14 +58,22 @@ function MessageScreen() {
                     });
                     //if no matching user is found 
                     if (matchingUser === undefined) {
-                        return [...response.data.data, ...previousAllChatArray]
+                        return [...response.data.data, ...previousAllChatArray];
                     }
+
                     return previousAllChatArray;
                 }
             });
 
+
+
+
+
+
         }).catch((error) => {
             console.log(error);
+            setShowLoading(false);
+            setShowError(true);
         });
     }, [apiURL]);
 
@@ -81,6 +94,7 @@ function MessageScreen() {
             console.log('next clicked');
             if (paginationLinks.next !== null) {
                 changeUrl(getUrl(paginationLinks.next)); //redux ma new url dispatch gareko
+                setShowLoading(true);
             }
         }
     }
@@ -129,6 +143,16 @@ function MessageScreen() {
                         <p title="Video Call"><FontAwesomeIcon className="custom-icon" icon="fa-solid fa-video" /></p>
                     </div>
                 </div>
+
+                <div className="alert-container">
+                    {showLoading === true &&
+                        <p className="alert-message-text">Loading chats</p>
+                    }
+                    {showError === true &&
+                        <p className="alert-message-text error-message-text">Something went wrong.Try again</p>
+                    }
+
+                </div>
                 <div className="chats-screen-container">
                     {allChatsArray.map((item, index) => (
                         <div key={item.id} className={index % 2 === 0 ? 'message-chat-row left-align-message' : 'message-chat-row right-align-message'}>
@@ -148,7 +172,7 @@ function MessageScreen() {
                     <FontAwesomeIcon className="custom-icon" icon="fa-regular fa-image" />
                 </div>
                 <div className="message-input-container">
-                    {message}
+
                     <textarea
                         id="message-textarea"
                         onInput={handleInputChange}
